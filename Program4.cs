@@ -1,11 +1,10 @@
-
 string firstName = "Пушкин";
 string secondName = "Александр";
 
 Console.WriteLine($"Имя {firstName} Фамилия {secondName}");
 
-string temp = firstName;
+string tempString = firstName;
 firstName = secondName;
-secondName = temp;
+secondName = tempString;
 
 Console.WriteLine($"Имя {firstName} Фамилия {secondName}");
