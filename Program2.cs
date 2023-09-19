@@ -1,9 +1,13 @@
 Console.WriteLine("Здраствуйте!\r\nВведите Ваше имя пожалуйста:");
-string name = Console.ReadLine();
+string userName = Console.ReadLine();
+
 Console.WriteLine("Подскажите, сколько Вам полных лет:");
-string old = Console.ReadLine();
+string  userAge = Console.ReadLine();
+
 Console.WriteLine("Пожалуйста, укажите знак зодиака:");
-string typeMonth = Console.ReadLine();
+string userSignType = Console.ReadLine();
+
 Console.WriteLine("Расскажите, где вы работаете:");
-string workPlace = Console.ReadLine();
+string userWorkPlace = Console.ReadLine();
+
 Console.WriteLine($"Вас зовут {name}, Вам {old} год, Вы {typeMonth} и работаете {workPlace}.");
