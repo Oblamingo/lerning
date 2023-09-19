@@ -1,5 +1,5 @@
 ﻿
-bool flagCorrect = true;
+bool isCorrect = true;
 int countCoins = 0;
 uint totalCountCoins = 0;
 long totalTimeTicks = 0;
