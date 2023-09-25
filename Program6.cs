@@ -1,8 +1,11 @@
 Console.WriteLine("Введите кол-во людей в очереди:");
 int.TryParse(Console.ReadLine(), out int countPeople);
 
-int totalMinutes = countPeople * 10;
-int hoursWaiting = totalMinutes / 60;
-int minutesWaiting = totalMinutes % 60;
+int timeForOnePerson = 10;
+int timeDivider = 60;
 
-Console.WriteLine($"В очереди {countPeople} человек, ваше время ожидания {hoursWaiting}ч. {minutesWaiting}мин.");
+int fullTimeMinutes = countPeople * timeForOnePerson;
+int hoursWait = fullTimeMinutes / timeDivider;
+int minutesWait = fullTimeMinutes % timeDivider;
+
+Console.WriteLine($"В очереди {countPeople} человек, ваше время ожидания {hoursWait}ч. {minutesWait}мин.");
