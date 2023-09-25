@@ -1,12 +1,11 @@
 Console.WriteLine($"Сколько у Вас монет?");
-int.TryParse(Console.ReadLine(), out int yourCouins);
+int.TryParse(Console.ReadLine(), out int playerCoins);
 
 int crystalPrice = 3;
 
 Console.WriteLine($"Цена кристала {crystalPrice}\r\nСколько купить кристаллов?");
-int.TryParse(Console.ReadLine(), out int countItems);
+int.TryParse(Console.ReadLine(), out int crystals);
 
-yourCouins -= countItems * crystalPrice;
+playerCoins -= crystals * crystalPrice;
 
-Console.WriteLine($"В инвентаре {countItems} кристаллов {yourCouins} монет");
-
+Console.WriteLine($"В инвентаре {crystals} кристаллов, {playerCoins} монет");
