@@ -1,8 +1,8 @@
-int countPic = 52;
+int picturesCount = 52;
 int lineLength = 3;
-int fullLines = countPic / lineLength;
-int shortLine = countPic % lineLength;
+int fullLinesCount = picturesCount / lineLength;
+int restPictures = picturesCount % lineLength;
 
-Console.WriteLine($"У пользователя всего {countPic} картинки" + 
-                  $"\r\nИз них можно состявить {fullLines} рядов" +
-                  $"\r\nНе полный ряд состоит из {shortLine} картинок");
+Console.WriteLine($"У пользователя всего {picturesCount} картинки" +
+                  $"\r\nИз них можно состявить {fullLinesCount} рядов" +
+                  $"\r\nНе полный ряд состоит из {restPictures} картинок");
