@@ -1,8 +1,9 @@
 int startNumber = 5;
 int endNumber = 100;
+int periodNumber = 7
 
 while (startNumber < endNumber)
 {
     Console.Write($"{startNumber} ");
-    startNumber += 7;    
+    startNumber += periodNumber;    
 }
