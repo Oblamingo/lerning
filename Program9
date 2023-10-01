@@ -1,0 +1,8 @@
+int startNumber = 5;
+int endNumber = 100;
+
+while (startNumber < endNumber)
+{
+    Console.Write($"{startNumber} ");
+    startNumber += 7;    
+}
