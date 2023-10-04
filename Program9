@@ -1,9 +1,13 @@
 int startNumber = 5;
 int endNumber = 100;
-int periodNumber = 7
+int periodNumber = 7;
 
-while (startNumber < endNumber)
+for(int i= startNumber; i<= endNumber; i+= periodNumber)
 {
-    Console.Write($"{startNumber} ");
-    startNumber += periodNumber;    
+    Console.Write($"{startNumber} ");    
+
+    if (startNumber + periodNumber < endNumber)
+        startNumber += periodNumber;
+    else
+        break;
 }
