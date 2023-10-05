@@ -72,9 +72,9 @@ while (menuNavigator!=MenuExit)
 
     Console.ForegroundColor = deafualtConsoleColor;
     Console.WriteLine($"\r\n\nВыберите операцию:" +
-        $"\r\n[{MenuDollarBuy}] Покупка долларов" +
+        $"\r\n[{MenuDollarBuy}] Покупка доллара" +
         $"\r\n[{MenuEuroBuy}] Покупка евро" +
-        $"\r\n[{MenuDollarSell}] Продажа долларов" +
+        $"\r\n[{MenuDollarSell}] Продажа доллара" +
         $"\r\n[{MenuEuroSell}] Продажа евро" +
         $"\r\n[{MenuExit}] Выход из программы");
 
