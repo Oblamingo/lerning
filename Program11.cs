@@ -1,47 +1,28 @@
-using System;
-using System.ComponentModel.Design;
-
 Console.Title = "CASH MARKET";
 
-const int MenuDollarSell = 1;
-const int MenuEuroSell = 2;
-const int MenuRublesSell = 3;
-
-const int MenuTypeByEuros = 1;
-const int MenuTypeByRubles = 2;
-const int MenuTypeByDollars = 3;
-
+const int MenuDollarToRubles = 1;
+const int MenuDollarToEuro = 2;
+const int MenuEuroToDollar = 3;
+const int MenuEuroToRubles = 4;
+const int MenuRublesToEuro = 5;
+const int MenuRublesToDollar = 6;
 const int MenuExit = 9;
 
-const int MenuErrorMessageEmpty = 0;
-const int MenuErrorSell = 1;
-const int MenuErrorComand = 2;
-
-int menuNavigatorCurrency = 0;
 int menuNavigatorType = 0;
 
-float dollarCostBuyRubles= 32f;
-float dollarCostBuyEuro = 1.1f;
-
-float euroCostBuyRubles = 41f;
-float euroCostBuyDollar = 1.4f;
-
-float rublesCostBuyEuro = 0.4f;
-float rublesCostBuyDollar = 0.3f;
-
+float dollarToRubles = 32f;
+float dollarToEuro = 1.1f;
+float euroToRubles = 41f;
+float euroToDollar = 1.4f;
+float rublesToEuro = 0.4f;
+float rublesToDollar = 0.3f;
 float templeCalculation = 0;
-float preCalculation = 0;
-
 float userDollars = 1000;
 float userEuros = 1000;
 float userRubles = 1000;
+float userWantedMoneyCount = 0;
 
 bool isWorking = true;
-
-float userWantedMoneyCount = 0;
-float userWantedMoneyCurrency = 0;
-
-int errorMessageType = 0;
 
 string messageEnterCount = $"Введите желаемое кол-во:";
 string messageNoEnoughMoneySell = $"Недостатончое кол-во средств для продажи";
@@ -55,190 +36,150 @@ ConsoleColor consoleColorName = ConsoleColor.Magenta;
 
 while (isWorking)
 {
-    Console.Clear();
-    isWorking = true;
+    messageShowing = "";
 
+    Console.Clear(); 
     Console.ForegroundColor = consoleColorName;
-    Console.Write($"Ваш баланс\t|" +
-        $"\tОбменный курс");
+    Console.Write($"Ваш баланс\t|\tОбменный курс\r\n");
     Console.ForegroundColor = consoleColorDeafualt;
-    Console.Write($"\r\n\t\t|" +
-        $"\t\tДоллар\tЕвро\tРубль");
-    Console.Write($"\r\nДоллар:\t{userDollars}\t|" +
-        $"\tДоллар\t1\t{dollarCostBuyEuro}\t{dollarCostBuyRubles}");
-    Console.Write($"\r\nЕвро:\t{userEuros}\t|" +
-        $"\tЕвро\t{euroCostBuyDollar}\t1\t{euroCostBuyRubles}");
-    Console.Write($"\r\nРубли:\t{userRubles}\t|" +
-        $"\tРубли\t{rublesCostBuyDollar}\t{rublesCostBuyEuro}\t1");
+    Console.Write($"\t\t|\t\tДоллар\tЕвро\tРубль\r\n");
+    Console.Write($"Доллар:\t{userDollars}\t|\tДоллар\t1\t{dollarToEuro}\t{dollarToRubles}\r\n");
+    Console.Write($"Евро:\t{userEuros}\t|\tЕвро\t{euroToDollar}\t1\t{euroToRubles}\r\n");
+    Console.Write($"Рубли:\t{userRubles}\t|\tРубли\t{rublesToDollar}\t{rublesToEuro}\t1");
 
     Console.ForegroundColor = consoleColorName;
     Console.WriteLine($"\r\n\nВыберите операцию:");
     Console.ForegroundColor = consoleColorDeafualt;
-    Console.WriteLine(  $"[{MenuDollarSell}] Конвертировать доллар" +
-                        $"\r\n[{MenuEuroSell}] Конвертировать евро" +
-                        $"\r\n[{MenuRublesSell}] Конвертировать рубли" +
-                        $"\r\n[{MenuExit}] Выход из программы");
+    Console.WriteLine(  $"[{MenuDollarToRubles}] Конвертировать доллар в рубли\r\n" +
+                        $"[{MenuDollarToEuro}] Конвертировать доллар в евро\r\n" +
+                        $"[{MenuEuroToDollar}] Конвертировать евро в доллар\r\n" +
+                        $"[{MenuEuroToRubles}] Конвертировать евро в рубли\r\n" +
+                        $"[{MenuRublesToEuro}] Конвертировать рубли в евро\r\n" +
+                        $"[{MenuRublesToDollar}] Конвертировать рубли в доллар\r\n" +
+                        $"[{MenuExit}] Выход из программы");
 
-    int.TryParse(Console.ReadLine(), out menuNavigatorType);
-
-    templeCalculation = 0;
-    preCalculation = 0;
-    errorMessageType = 0;
-
-    switch (menuNavigatorType)
-    {      
-        case MenuDollarSell:
-            Console.ForegroundColor = consoleColorName;
-            Console.WriteLine($"Выберите в валюту конвертации Доллара:");
-            Console.ForegroundColor = consoleColorDeafualt;
-            Console.WriteLine($"[{MenuTypeByRubles}] в Рубли" +
-                     $"\r\n[{MenuTypeByEuros}] в Евро");
-
-            int.TryParse(Console.ReadLine(), out menuNavigatorCurrency);
-
-            switch (menuNavigatorCurrency)
-            {
-                case MenuTypeByEuros:
-                    userWantedMoneyCurrency = dollarCostBuyEuro;
-                    break;
-                case MenuTypeByRubles:
-                    userWantedMoneyCurrency = dollarCostBuyRubles;
-                    break;
-                default:
-                    errorMessageType = MenuErrorComand;
-                    break;
-            }
-            break;
-
-        case MenuEuroSell:
-            Console.ForegroundColor = consoleColorName;
-            Console.WriteLine($"Выберите в валюту конвертации Евро:");
-            Console.ForegroundColor = consoleColorDeafualt;
-            Console.WriteLine($"[{MenuTypeByRubles}] в Рубли" +
-                        $"\r\n[{MenuTypeByDollars}] в Доллары");
-
-            int.TryParse(Console.ReadLine(), out menuNavigatorCurrency);
-
-            switch (menuNavigatorCurrency)
-            {
-                case MenuTypeByDollars:
-                    userWantedMoneyCurrency = euroCostBuyDollar;
-                    break;
-                case MenuTypeByRubles:
-                    userWantedMoneyCurrency = euroCostBuyRubles;
-                    break;
-                default:
-                    errorMessageType = MenuErrorComand;
-                    break;
-            }
-            break;
-
-        case MenuRublesSell:
-            Console.ForegroundColor = consoleColorName;
-            Console.WriteLine($"Выберите в валюту конвертации Рублей:");
-            Console.ForegroundColor = consoleColorDeafualt;
-            Console.WriteLine($"[{MenuTypeByEuros}] в Евро" +
-                              $"\r\n[{MenuTypeByDollars}] в Доллары");
-
-            int.TryParse(Console.ReadLine(), out menuNavigatorCurrency);
-
-            switch (menuNavigatorCurrency)
-            {
-                case MenuTypeByDollars:
-                    userWantedMoneyCurrency = rublesCostBuyDollar;
-                    break;
-                case MenuTypeByEuros:
-                    userWantedMoneyCurrency = rublesCostBuyEuro;
-                    break;
-                default:
-                    errorMessageType = MenuErrorComand;
-                    break;
-            }
-            break;
-
-        case MenuExit:
-                isWorking = false;
-                break;  
-            
-        default:
-                errorMessageType = MenuErrorComand;
-                break;  
-            
-    }
-
-    if (errorMessageType == MenuErrorMessageEmpty && isWorking)
+    if (int.TryParse(Console.ReadLine(), out menuNavigatorType))
     {
-        Console.WriteLine(messageEnterCount);
-        Console.ForegroundColor = consoleColorAgree;
-
-        float.TryParse(Console.ReadLine(), out userWantedMoneyCount);
-
-        templeCalculation = userWantedMoneyCount * userWantedMoneyCurrency;
-
-        if (userWantedMoneyCount > 0)
+        if (menuNavigatorType == MenuExit)
         {
-            switch (menuNavigatorType)
+            isWorking = false;
+            continue;
+        }
+        else
+        {
+            Console.WriteLine(messageEnterCount);
+            Console.ForegroundColor = consoleColorAgree;
+
+            if (float.TryParse(Console.ReadLine(), out userWantedMoneyCount))
             {
-                case MenuDollarSell:
-                    preCalculation = userDollars - userWantedMoneyCount;
-                    if (preCalculation >= 0)
+                if (userWantedMoneyCount > 0)
+                {
+                    switch (menuNavigatorType)
                     {
-                        userDollars = preCalculation;
-                        if (menuNavigatorCurrency == MenuTypeByEuros)
-                            userEuros += templeCalculation;
+                        case MenuDollarToRubles:
+                            templeCalculation = userDollars - userWantedMoneyCount;
 
-                        else if (menuNavigatorCurrency == MenuTypeByRubles)
-                            userRubles += templeCalculation;
+                            if (templeCalculation >= 0)
+                            {
+                                userDollars = templeCalculation;
+                                userRubles += userWantedMoneyCount * dollarToRubles;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        case MenuDollarToEuro:
+                            templeCalculation = userDollars - userWantedMoneyCount;
+
+                            if (templeCalculation >= 0)
+                            {
+                                userDollars = templeCalculation;
+                                userEuros += userWantedMoneyCount * dollarToEuro;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        case MenuEuroToDollar:
+                            templeCalculation = userEuros - userWantedMoneyCount;
+
+                            if (templeCalculation >= 0)
+                            {
+                                userEuros = templeCalculation;
+                                userDollars += userWantedMoneyCount * euroToDollar;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        case MenuEuroToRubles:
+                            templeCalculation = userEuros - userWantedMoneyCount;
+
+                            if (templeCalculation >= 0)
+                            {
+                                userEuros = templeCalculation;
+                                userRubles += userWantedMoneyCount * euroToRubles;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        case MenuRublesToEuro:
+                            templeCalculation = userRubles - userWantedMoneyCount;
+
+                            if (templeCalculation >= 0)
+                            {
+                                userRubles = templeCalculation;
+                                userEuros += userWantedMoneyCount * rublesToEuro;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        case MenuRublesToDollar:
+                            templeCalculation = userRubles - userWantedMoneyCount;
+
+                            if (templeCalculation >= 0)
+                            {
+                                userRubles = templeCalculation;
+                                userDollars += userWantedMoneyCount * rublesToDollar;
+                            }
+                            else
+                            {
+                                messageShowing = messageNoEnoughMoneySell;
+                            }
+                            break;
+
+                        default:
+                            messageShowing = messageErrorMenu;
+                            break;
                     }
-                    else
-                        errorMessageType = MenuErrorSell;
-                    break;
-
-                case MenuEuroSell:
-                    preCalculation = userEuros - userWantedMoneyCount;
-                    if (preCalculation >= 0)
-                    {
-                        userEuros = preCalculation;
-                        if (menuNavigatorCurrency == MenuTypeByDollars)
-                            userDollars += templeCalculation;
-
-                        else if (menuNavigatorCurrency == MenuTypeByRubles)
-                            userRubles += templeCalculation;
-                    }
-                    else
-                        errorMessageType = MenuErrorSell;
-                    break;
-
-                case MenuRublesSell:
-                    preCalculation = userRubles - userWantedMoneyCount;
-                    if (preCalculation >= 0)
-                    {
-                        userRubles = preCalculation;
-                        if (menuNavigatorCurrency == MenuTypeByDollars)
-                            userDollars += templeCalculation;
-
-                        else if (menuNavigatorCurrency == MenuTypeByEuros)
-                            userEuros += templeCalculation;
-                    }
-                    else                    
-                        errorMessageType = MenuErrorSell;                    
-                    break;
+                }
+            }
+            else
+            {
+                messageShowing = messageErrorMenu;
             }
         }
     }
+    else
+    {
+        messageShowing = messageErrorMenu;
+    }
 
-    if (errorMessageType > MenuErrorMessageEmpty)
+    if (string.IsNullOrWhiteSpace(messageShowing))
     {
         Console.ForegroundColor = consoleColorAlert;
-        switch (errorMessageType)
-        {
-            case MenuErrorSell:
-                messageShowing = messageNoEnoughMoneySell;
-                break;
-            case MenuErrorComand:
-                messageShowing = messageErrorMenu;
-                break;
-        }
         Console.WriteLine(messageShowing);
     }
 }
