@@ -8,7 +8,6 @@ const string MenuExit = "9";
 const string MenuColorRed = "1";
 const string MenuColorGreen = "2";
 
-string menuNavigatorType = "0";
 int silienceNumber = 0;
 int countTries = 3;
 int userGameNumber = 0;
@@ -37,6 +36,7 @@ string userName = defaultName;
 string userPassword = defaultName;
 string authorisationName = string.Empty;
 string authorisationPassword = string.Empty;
+string menuNavigatorType = "0";
 
 string errorInputLogin = "Не верный логин или пароль. Повторите попытку.";
 string errorInputWrong = "Не корректный ввод!";
