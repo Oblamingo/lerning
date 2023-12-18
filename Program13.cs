@@ -1,12 +1,15 @@
 Console.Title = "Honor name";
 
 string userName = string.Empty;
-string writeWord = "";
+string writeWord = string.Empty;
 string tempWord= string.Empty;
 
 char userChar;
 
-int lengthname = 0;
+int lengthName = 0;
+int highFrame = 3;
+int widthFrame = 0;
+int thicknessFrame = 1;
 
 Console.Write($"Пожалуйста введите Ваше имя:");
 userName = Console.ReadLine();
@@ -14,18 +17,19 @@ userName = Console.ReadLine();
 Console.Write($"Пожалуйста введите символ для рамки:");
 userChar = Console.ReadKey().KeyChar;
 
-lengthname = userName.Length;
+lengthName = userName.Length;
+widthFrame = thicknessFrame + lengthName + thicknessFrame;
 
 //circle algorithm
 
 writeWord += "\r\n";
-for (int j = 0; j < 3; j++)
+for (int j = 0; j < highFrame; j++)
 {
-    for (int i = 0; i < lengthname + 2; i++)
+    for (int i = 0; i < widthFrame; i++)
     {
-        if (j==1 && i>0 && i<= lengthname)
+        if (j == thicknessFrame && i>0 && i<= lengthName)
         {
-            writeWord += userName[i-1];
+            writeWord += userName[i - thicknessFrame];
         }
         else
         {
@@ -39,11 +43,23 @@ Console.WriteLine($"{writeWord}");
 
 //short algorithm
 
-tempWord = new String(userChar, lengthname + 2);
+tempWord = new String(userChar, widthFrame);
+
+Console.WriteLine($"{tempWord}\r\n" +
+                  $"{userChar}{userName}{userChar}\r\n" +
+                  $"{tempWord}\r\n");
+
+//admin algorithm
+
+tempWord = string.Empty;
+
+for (int i = 0; i < widthFrame; i++)
+{
+    tempWord += userChar;
+}
 
 Console.WriteLine($"{tempWord}\r\n" +
                   $"{userChar}{userName}{userChar}\r\n" +
                   $"{tempWord}\r\n");
 
 Console.ReadKey();
-
