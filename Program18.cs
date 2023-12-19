@@ -3,56 +3,37 @@ Console.Title = $"Bracers";
 string userLineSybols = string.Empty;
 
 int currentNesting = 0;
-int nesting = 0;
-int nuberToCheckClosing = 2;
+int maximunNesting = 0;
 
 char magicOpenBracer = '(';
 char magicCloseBracer = ')';
 
 Console.WriteLine($"Введите строку из символов '{magicOpenBracer}' и '{magicCloseBracer}'");
-userLineSybols = Console.ReadLine()??"";
+userLineSybols = Console.ReadLine() ?? "";
 
-if (userLineSybols.Length % nuberToCheckClosing == 0)
+foreach (char symbol in userLineSybols)
 {
-    if (userLineSybols[0] != magicCloseBracer && userLineSybols[userLineSybols.Length-1] != magicOpenBracer)
+    if (symbol == magicOpenBracer)
     {
-        foreach (char oneSymbol in userLineSybols)
-        {
-            if (currentNesting >= 0)
-            {
-                if (oneSymbol == magicOpenBracer)
-                {
-                    currentNesting++;
-                }
-                else if (oneSymbol == magicCloseBracer)
-                {
-                    currentNesting--;
-                }
-            }
-            else
-            {
-                break;
-            }
+        currentNesting++;
 
-            if (currentNesting > nesting)
-            {
-                nesting = currentNesting;
-            }
+        if (currentNesting > maximunNesting)
+        {
+            maximunNesting = currentNesting;
         }
     }
-    else
+    else if (symbol == magicCloseBracer)
     {
-        currentNesting = -1;
+        currentNesting--;
+
+        if (currentNesting < 0)
+            break;
     }
-}
-else
-{
-    currentNesting = -1;
 }
 
 if (currentNesting == 0)
 {
-    Console.WriteLine($"Строка корректная {userLineSybols} Максимальная вложенность {nesting}");
+    Console.WriteLine($"Строка корректная {userLineSybols} Максимальная вложенность {maximunNesting}");
 }
 else
 {
