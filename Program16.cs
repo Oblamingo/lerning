@@ -1,15 +1,15 @@
-Console.Title = "Count N between 100 to 1000";
-
 int countNumbers = 0;
 int randomNumber = 0;
 int startPeriod = 1;
-int endPeriod = 28;
+int endPeriod = 27;
 int intervalMinimum = 100;
 int intervalMaximum = 1000;
 
 Random random = new Random();
 
-randomNumber = random.Next(startPeriod, endPeriod);
+Console.Title = $"Count N between {intervalMinimum} to {intervalMaximum}";
+
+randomNumber = random.Next(startPeriod, endPeriod + 1);
 
 for (int i = 0; i < intervalMaximum; i += randomNumber)
 {
