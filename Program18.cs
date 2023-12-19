@@ -1,56 +1,56 @@
-Console.Title = "Bracers";
+Console.Title = $"Bracers";
 
 string userLineSybols = string.Empty;
 
-int countSybols = 0;
+int currentNesting = 0;
 int nesting = 0;
 int nuberToCheckClosing = 2;
 
 char magicOpenBracer = '(';
 char magicCloseBracer = ')';
 
-Random random = new Random();
-
 Console.WriteLine($"Введите строку из символов '{magicOpenBracer}' и '{magicCloseBracer}'");
-userLineSybols = Console.ReadLine() ?? "";
+userLineSybols = Console.ReadLine()??"";
 
 if (userLineSybols.Length % nuberToCheckClosing == 0)
 {
     if (userLineSybols[0] != magicCloseBracer && userLineSybols[userLineSybols.Length-1] != magicOpenBracer)
     {
-        foreach (char oneChar in userLineSybols)
+        foreach (char oneSymbol in userLineSybols)
         {
-            if (oneChar == magicOpenBracer)
+            if (currentNesting >= 0)
             {
-                countSybols++;
-            }
-            else if (oneChar == magicCloseBracer)
-            {
-                countSybols--;
+                if (oneSymbol == magicOpenBracer)
+                {
+                    currentNesting++;
+                }
+                else if (oneSymbol == magicCloseBracer)
+                {
+                    currentNesting--;
+                }
             }
             else
             {
-                countSybols = -1;
                 break;
             }
 
-            if (countSybols > nesting)
+            if (currentNesting > nesting)
             {
-                nesting = countSybols;
+                nesting = currentNesting;
             }
         }
     }
     else
     {
-        countSybols = -1;
+        currentNesting = -1;
     }
 }
 else
 {
-    countSybols = -1;
+    currentNesting = -1;
 }
 
-if (countSybols == 0)
+if (currentNesting == 0)
 {
     Console.WriteLine($"Строка корректная {userLineSybols} Максимальная вложенность {nesting}");
 }
