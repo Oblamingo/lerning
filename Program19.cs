@@ -1,5 +1,3 @@
-Console.Title = $"Boss battle";
-
 const string title =  "#############################################################################\n" +
                       "#                                                                           #\n" +
                       "#    ###    #####  #####  #####    ###    ###   #####  #####  #      #####  #\n" +
@@ -47,6 +45,8 @@ string mainMenu= string.Empty ;
 string messageResult= string.Empty ;
 string messageHero= string.Empty ;
 string messageBoss= string.Empty ;
+
+Console.Title = $"Boss battle";
 
 while (isPlying)
 {
@@ -104,8 +104,12 @@ while (isPlying)
 
                 switch (mainMenu)
                 {
+                    case menuHeroAttack:
+                        heroDamage = heroRegularAttack;
+                        break;
+
                     case menuHeroFireBall:
-                        if ((heroMana - heroFireBall) > 0)
+                        if (heroMana > heroFireBall)
                         {
                             heroDamage = heroFireBall;
                             heroMana -= heroFireBallMana;
@@ -130,10 +134,6 @@ while (isPlying)
                             heroHealth = heroHealth > heroMaxHealth ? heroMaxHealth : heroHealth;
                             heroMana = heroMaxMana;
                         }
-                        break;
-
-                    case menuHeroAttack:
-                        heroDamage = heroRegularAttack;
                         break;
                 }
 
