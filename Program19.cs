@@ -7,25 +7,25 @@ const string title =  "#########################################################
                       "#    #####  #####  #####  #####    #####  #  #    #      #    #####  #####  #\n" +
                       "#                                                                           #\n" +
                       "#############################################################################\n";
-const string menuFight = "1";
-const string menuExit = "2";
-const string menuHeroAttack = "1";
-const string menuHeroFireBall = "2";
-const string menuHeroExplosion= "3";
-const string menuHeroHeal = "4";
-const string messageWinBattle = "Вы победили! Босс повержен!";
-const string messageLooseBattle = "Вы проиграли! Босс победил!";
+const string MenuFight = "1";
+const string MenuExit = "2";
+const string MenuHeroAttack = "1";
+const string MenuHeroFireBall = "2";
+const string MenuHeroExplosion= "3";
+const string MenuHeroHeal = "4";
+const string MessageWinBattle = "Вы победили! Босс повержен!";
+const string MessageLooseBattle = "Вы проиграли! Босс победил!";
 
-const int heroMaxMana = 100;
-const int heroMaxHealth = 10;
-const int bossMaxHealth = 50;
-const int bossMinimumDamage = 1;
-const int bossMaximumDamage = 5;
-const int heroFireBall = 5;
-const int heroExplosion = 15;
-const int heroFireBallMana = 10;
-const int heroExplosionMana = 50;
-const int heroHeal = 5;
+const int HeroMaxMana = 100;
+const int HeroMaxHealth = 10;
+const int BossMaxHealth = 50;
+const int BossMinimumDamage = 1;
+const int BossMaximumDamage = 5;
+const int HeroFireBall = 5;
+const int HeroExplosion = 15;
+const int HeroFireBallMana = 10;
+const int HeroExplosionMana = 50;
+const int HeroHeal = 5;
 
 Random random = new Random();
 
@@ -52,18 +52,18 @@ while (isPlying)
 {
     Console.Clear();
     Console.WriteLine(title);
-    Console.WriteLine($"{menuFight}) Бой");
-    Console.WriteLine($"{menuExit}) Выход");
+    Console.WriteLine($"{MenuFight}) Бой");
+    Console.WriteLine($"{MenuExit}) Выход");
 
     mainMenu = Console.ReadLine() ?? "";
 
     switch (mainMenu)
     {
-        case menuFight:
+        case MenuFight:
             isFight = true;
-            bossHealth = bossMaxHealth;
-            heroHealth = heroMaxHealth;
-            heroMana = heroMaxMana;
+            bossHealth = BossMaxHealth;
+            heroHealth = HeroMaxHealth;
+            heroMana = HeroMaxMana;
 
             while (isFight)
             {
@@ -86,16 +86,16 @@ while (isPlying)
                 }
 
                 Console.WriteLine($"Выберите атаку:");
-                Console.WriteLine($"{menuHeroAttack} Обычная атака");
+                Console.WriteLine($"{MenuHeroAttack} Обычная атака");
 
-                if ((heroMana - heroFireBall) > 0)
-                    Console.WriteLine($"{menuHeroFireBall} Огненный шар");
+                if ((heroMana - HeroFireBall) > 0)
+                    Console.WriteLine($"{MenuHeroFireBall} Огненный шар");
 
                 if (isUseFireBall)
-                    Console.WriteLine($"{menuHeroExplosion} Взрыв");
+                    Console.WriteLine($"{MenuHeroExplosion} Взрыв");
 
                 if (healingPoints > 0)
-                    Console.WriteLine($"{menuHeroHeal} Лечение({healingPoints})");
+                    Console.WriteLine($"{MenuHeroHeal} Лечение({healingPoints})");
 
                 mainMenu = Console.ReadLine() ?? "";
                 heroDamage = 0;
@@ -104,35 +104,35 @@ while (isPlying)
 
                 switch (mainMenu)
                 {
-                    case menuHeroAttack:
+                    case MenuHeroAttack:
                         heroDamage = heroRegularAttack;
                         break;
 
-                    case menuHeroFireBall:
-                        if (heroMana > heroFireBall)
+                    case MenuHeroFireBall:
+                        if (heroMana > HeroFireBall)
                         {
-                            heroDamage = heroFireBall;
-                            heroMana -= heroFireBallMana;
+                            heroDamage = HeroFireBall;
+                            heroMana -= HeroFireBallMana;
                             isUseFireBall = true;
                         }
                         break;
 
-                    case menuHeroExplosion:
+                    case MenuHeroExplosion:
                         if (isUseFireBall)
                         {
-                            heroDamage = heroExplosion;
-                            heroMana -= heroExplosionMana;
+                            heroDamage = HeroExplosion;
+                            heroMana -= HeroExplosionMana;
                             isUseFireBall = false;
                         }
                         break;
 
-                    case menuHeroHeal:
+                    case MenuHeroHeal:
                         if (healingPoints > 0)
                         {
                             healingPoints--;
-                            heroHealth += heroHeal;
-                            heroHealth = heroHealth > heroMaxHealth ? heroMaxHealth : heroHealth;
-                            heroMana = heroMaxMana;
+                            heroHealth += HeroHeal;
+                            heroHealth = heroHealth > HeroMaxHealth ? HeroMaxHealth : heroHealth;
+                            heroMana = HeroMaxMana;
                         }
                         break;
                 }
@@ -144,7 +144,7 @@ while (isPlying)
                     if (bossHealth <= 0)
                     {
                         bossHealth = 0;
-                        messageResult = messageWinBattle;
+                        messageResult = MessageWinBattle;
                         isFight = false;
                     }
                     else
@@ -154,18 +154,18 @@ while (isPlying)
                 }
                 else
                 {
-                    messageHero = $"+{heroHeal}";
+                    messageHero = $"+{HeroHeal}";
                 }
 
                 if (isFight)
                 {
-                    bossDamage = random.Next(bossMinimumDamage, bossMaximumDamage);
+                    bossDamage = random.Next(BossMinimumDamage, BossMaximumDamage);
                     heroHealth -= bossDamage;
 
                     if (heroHealth <= 0)
                     {
                         heroHealth = 0;
-                        messageResult = messageLooseBattle;
+                        messageResult = MessageLooseBattle;
                         isFight = false;
                     }
                     else
@@ -179,7 +179,7 @@ while (isPlying)
             Console.ReadKey();
             break;
 
-        case menuExit:
+        case MenuExit:
             isPlying = false;
             break;
     }
