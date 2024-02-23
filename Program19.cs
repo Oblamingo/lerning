@@ -133,7 +133,6 @@ while (isPlying)
                         break;
 
                     case menuHeroAttack:
-                    default:
                         heroDamage = heroRegularAttack;
                         break;
                 }
