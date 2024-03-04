@@ -1,7 +1,7 @@
 Random random = new Random();
 
 int maxElement = 0;
-int magicalNumber = 0;
+int eraseNumber = 0;
 int arraySize = 10;
 int randomMin = 10;
 int randomMax = 100;
@@ -33,7 +33,7 @@ for (int i = 0; i < array.GetLength(0); i++)
     {
         if (array[i, j] == maxElement)
         {
-            array[i, j] = magicalNumber;
+            array[i, j] = eraseNumber;
         }
 
         Console.Write(array[i, j] + " ");
