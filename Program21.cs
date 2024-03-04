@@ -1,6 +1,7 @@
 Random random = new Random();
 
 int maxElement = 0;
+int magicalNumber = 0;
 int arraySize = 10;
 int randomMin = 10;
 int randomMax = 100;
@@ -32,7 +33,7 @@ for (int i = 0; i < array.GetLength(0); i++)
     {
         if (array[i, j] == maxElement)
         {
-            array[i, j] = 0;
+            array[i, j] = magicalNumber;
         }
 
         Console.Write(array[i, j] + " ");
