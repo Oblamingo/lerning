@@ -1,6 +1,6 @@
 Random random = new Random();
 
-int maxElement = 0;
+int maxElement = int.MinValue;
 int eraseNumber = 0;
 int arraySize = 10;
 int randomMin = 10;
@@ -12,7 +12,7 @@ for (int i = 0; i < array.GetLength(0); i++)
 {
     for (int j = 0; j < array.GetLength(1); j++)
     {
-        array[i, j] = random.Next(randomMin, randomMax);        
+        array[i, j] = random.Next(randomMin, randomMax);
 
         if (maxElement < array[i, j])
         {
