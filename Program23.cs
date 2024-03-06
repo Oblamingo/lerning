@@ -18,14 +18,14 @@ namespace Lerning
             string inputLine = string.Empty;
             string messageTemp = string.Empty;
 
-            int[] arrayNumbers = new int[arraySize];
-            int[] arrayTemp = new int[arraySize];
+            int[] numbers = new int[arraySize];
+            int[] tempNumbers = new int[arraySize];
 
             while (isEnter)
             {
-                if (arrayNumbers.Length > 0)
+                if (numbers.Length > 0)
                 {
-                    foreach (int i in arrayNumbers)
+                    foreach (int i in numbers)
                     {
                         messageTemp += $"{i} ";
                     }
@@ -42,10 +42,13 @@ namespace Lerning
                 switch (inputLine)
                 {
                     case MenuSum:
-                        foreach (int i in arrayNumbers)
+                        foreach (int i in numbers)
                             sumNumbers += i;
 
                         Console.WriteLine($"Sum = {sumNumbers}\nPress any key. . .");
+
+                        sumNumbers = 0;
+
                         Console.ReadKey();
                         break;
 
@@ -56,15 +59,15 @@ namespace Lerning
                     default:
                         if (int.TryParse(inputLine, out inputInt))
                         {
-                            arrayTemp = new int[arrayNumbers.Length + 1];
+                            tempNumbers = new int[numbers.Length + 1];
 
-                            for (int i = 0; i < arrayNumbers.Length; i++)
+                            for (int i = 0; i < numbers.Length; i++)
                             {
-                                arrayTemp[i] = arrayNumbers[i];
+                                tempNumbers[i] = numbers[i];
                             }
 
-                            arrayTemp[arrayTemp.Length - 1] = inputInt;
-                            arrayNumbers = arrayTemp;
+                            tempNumbers[tempNumbers.Length - 1] = inputInt;
+                            numbers = tempNumbers;
                         }
                         else
                         {
