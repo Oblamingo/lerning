@@ -1,17 +1,20 @@
-const int RandomMax = 1;
-const int RandomMin = 10;
-const int ArraySize = 30;
-
 Random random = new Random();
+
+int randomMax = 1;
+int randomMin = 10;
+int arraySize = 30;
+int numbersLength = 0;
 
 string initialArray = "";
 string localMaxArray = "";
 
-int[] array = new int[ArraySize];
+int[] array = new int[arraySize];
+
+numbersLength = array.Length - 1;
 
 for (int i = 0; i < array.Length; i++)
 {
-    array[i] = random.Next(RandomMax, RandomMin);
+    array[i] = random.Next(randomMax, randomMin);
     initialArray += Convert.ToString(array[i] + " ");
 }
 
@@ -20,7 +23,7 @@ if ((array[0] > array[1]))
     localMaxArray += array[0] + " ";
 }
 
-for (int j = 1; j < array.Length - 1; j++)
+for (int j = 1; j < numbersLength; j++)
 {
     if (array[j] > array[j + 1] && array[j] > array[j - 1])
     {
@@ -28,9 +31,9 @@ for (int j = 1; j < array.Length - 1; j++)
     }
 }
 
-if (array[array.Length - 1] > array[array.Length - 2])
+if (array[numbersLength] > array[numbersLength - 1])
 {
-    localMaxArray += "" + array[array.Length - 1];
+    localMaxArray += "" + array[numbersLength];
 }
 
 Console.WriteLine($"Исходный массив:{initialArray}\n" +
