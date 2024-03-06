@@ -46,10 +46,9 @@ namespace Lerning
                             sumNumbers += i;
 
                         Console.WriteLine($"Sum = {sumNumbers}\nPress any key. . .");
-
-                        sumNumbers = 0;
-
                         Console.ReadKey();
+                        
+                        sumNumbers = 0;                        
                         break;
 
                     case MenuExit:
