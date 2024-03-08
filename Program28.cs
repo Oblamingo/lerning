@@ -6,29 +6,27 @@ namespace Lerning
     {
         static void Main(string[] args)
         {
-            int userNumber = 0;
-
-            GetNumberFromUser(out userNumber);
-
-            Console.WriteLine($"Введённое число {userNumber}"); ;
+            Console.WriteLine($"Введённое число {GetNumberFromUser()}"); ;
             Console.ReadKey();
         }
 
-        private static void GetNumberFromUser(out int userNumber)
+        private static int GetNumberFromUser()
         {
-            userNumber = 0;
+            int userNumber = 0;
 
             while (userNumber==0)
             {
                 Console.WriteLine("Пожалуйста введите целое число отличное от нуля:");
 
-                if (!int.TryParse(Console.ReadLine(), out userNumber))
+                if (int.TryParse(Console.ReadLine(), out userNumber) == false)
                 {
                     Console.WriteLine("Не верный вод. Нажмите любую клавишу . . .");
                     Console.ReadKey();
                     Console.Clear();
                 }
             }
+
+            return userNumber;
         }
     }
 }
