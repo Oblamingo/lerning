@@ -9,7 +9,9 @@ namespace Lerning
             int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             ShowArray(array);
+
             Shuffle(array);
+
             ShowArray(array);
         }
 
@@ -19,13 +21,14 @@ namespace Lerning
 
             int arrayIndex;
             int tempElement;
+            int startRandom = 0;
 
-            for (int i =0 ; i <= array.Length - 1;  i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                arrayIndex = random.Next(i, array.Length);
+                arrayIndex = random.Next(startRandom, array.Length);
                 tempElement = array[arrayIndex];
                 array[arrayIndex] = array[i];
-                array[i] = tempElement;                
+                array[i] = tempElement;
             }
         }
         static void ShowArray(int[] array)
@@ -34,6 +37,7 @@ namespace Lerning
             {
                 Console.Write(element + " ");
             }
+
             Console.WriteLine();
         }
     }
