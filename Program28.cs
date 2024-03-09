@@ -18,7 +18,7 @@ namespace Lerning
 
             while (isUserNumberEmpty)
             {
-                Console.WriteLine("Пожалуйста введите целое число отличное от нуля:");
+                Console.WriteLine("Пожалуйста введите целое число:");
 
                 if (int.TryParse(Console.ReadLine(), out userNumber) == false)
                 {
