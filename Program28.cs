@@ -12,9 +12,11 @@ namespace Lerning
 
         private static int GetNumberFromUser()
         {
+            bool isUserNumberEmpty = true;
+
             int userNumber = 0;
 
-            while (userNumber==0)
+            while (isUserNumberEmpty)
             {
                 Console.WriteLine("Пожалуйста введите целое число отличное от нуля:");
 
@@ -23,6 +25,10 @@ namespace Lerning
                     Console.WriteLine("Не верный вод. Нажмите любую клавишу . . .");
                     Console.ReadKey();
                     Console.Clear();
+                }
+                else
+                {
+                    isUserNumberEmpty = false;
                 }
             }
 
