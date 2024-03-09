@@ -22,6 +22,8 @@ namespace Lerning
         static void DrawBar(int persentHealth, char symbolHealth, char symbolEmpty)
         {
             string healthPrefix = "Health ";
+            string healthInSybols = string.Empty;
+            string damagedHealthInSymbols = string.Empty;
 
             int healthInBar = 0;
             int lengthBar = 10;
@@ -30,9 +32,11 @@ namespace Lerning
 
             if (healthInBar >= 0 && healthInBar <= lengthBar)
             {
+                healthInSybols = GenerateLineSymbols(symbolHealth, healthInBar);
+                damagedHealthInSymbols = GenerateLineSymbols(symbolEmpty, lengthBar - healthInBar);
+
                 Console.Write($"{healthPrefix}{persentHealth}%\n" +
-                              $"{healthPrefix}[{GenerateLineSymbols(symbolHealth, healthInBar)}" +
-                                             $"{GenerateLineSymbols(symbolEmpty, lengthBar - healthInBar)}]");
+                              $"{healthPrefix}[{healthInSybols}{damagedHealthInSymbols}]");
             }
             else
             {
