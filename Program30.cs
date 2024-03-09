@@ -31,6 +31,7 @@ namespace Lerning
                 array[i] = tempElement;
             }
         }
+        
         static void ShowArray(int[] array)
         {
             foreach (int element in array)
