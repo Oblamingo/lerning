@@ -12,7 +12,7 @@ namespace Lerning
             int persentHealth = 0;
 
             char symbolHealth = '#';
-            char symbolEmpty = ' ';
+            char symbolEmpty = '_';
 
             persentHealth = (health * persentFull) / maxHealth;
 
