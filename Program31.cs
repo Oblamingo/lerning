@@ -1,4 +1,7 @@
 using System;
+using System.Xml.Linq;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lerning
 {
@@ -12,19 +15,21 @@ namespace Lerning
             const char MenuFindUser = '4';
             const char MenuExit = '5';
 
-            int sizeArray = 0;
-
             bool isWork = true;
 
             ConsoleKeyInfo chooseMenu;
 
-            string[] stuffProfiles = new string[sizeArray];
-            string[] stuffPost = new string[sizeArray];
-
-            CreateProfileAndPost("Имен", "Фамилий", "Отцович", "Уборщик", ref stuffProfiles, ref stuffPost);
-            CreateProfileAndPost("Иван", "Иванов", "Иванович", "Креативный Дизайнер", ref stuffProfiles, ref stuffPost);
-            CreateProfileAndPost("Сергей", "Суровов", "Ульянович", "Охранник", ref stuffProfiles, ref stuffPost);
-            CreateProfileAndPost("Сергей", "Иванов", "Сергеевич", "Админ", ref stuffProfiles, ref stuffPost);
+            string[] stuffProfiles = new string[0];
+            string[] stuffPost = new string[0];
+            
+            CreateNewElementOfArray($"Имен Фамилий Отцович", ref stuffProfiles);
+            CreateNewElementOfArray("Уборщик", ref stuffPost);
+            CreateNewElementOfArray("Иван Иванов Иванович", ref stuffProfiles);
+            CreateNewElementOfArray("Креативный Дизайнер", ref stuffPost);
+            CreateNewElementOfArray("Сергей Суровов Ульянович", ref stuffProfiles);
+            CreateNewElementOfArray("Охранник", ref stuffPost);
+            CreateNewElementOfArray("Сергей Иванов Сергеевич", ref stuffProfiles);
+            CreateNewElementOfArray("Админ", ref stuffPost);
 
             while (isWork)
             {
@@ -39,16 +44,16 @@ namespace Lerning
                 switch (chooseMenu.KeyChar)
                 {
                     case MenuAddProfile:
-                        InputNewProfileAndPost(ref stuffProfiles, ref stuffPost);
+                        InputNewDossier(ref stuffProfiles, ref stuffPost);
                         break;
                     case MenuShowAllProfile:
-                        ShowAllProfilesAndPost(stuffProfiles, stuffPost);
+                        ShowAllDossies(stuffProfiles, stuffPost);
                         break;
                     case MenuDeleteProfile:
-                        DeleteSomeProfile(ref stuffProfiles, ref stuffPost);
+                        DeleteOneDossier(ref stuffProfiles, ref stuffPost);
                         break;
                     case MenuFindUser:
-                        FindSomeUser(stuffProfiles, stuffPost);
+                        FindSomeDossier(stuffProfiles, stuffPost);
                         break;
                     case MenuExit:
                         isWork = false;
@@ -63,14 +68,13 @@ namespace Lerning
             }
         }
 
-        private static void FindSomeUser(string[] stuffProfiles, string[] stuffPost)
+        private static void FindSomeDossier(string[] stuffProfiles, string[] stuffPost)
         {
             string codeExit = "quit";
             string userInput = string.Empty;
             string surName = string.Empty;
             string outputFounds= string.Empty;
 
-            int outputFoundCount = 0;
             int limitLength = 2;
             int notFound = -1;
 
@@ -92,15 +96,10 @@ namespace Lerning
 
                         if(surName.IndexOf(userInput) != notFound)
                         {
-                            outputFoundCount++;
-                            outputFounds = $"{outputFoundCount})";
-                            outputFounds += GenerateFullNameAndPost(stuffProfiles[i], stuffPost[i]);
-                            
-                            Console.WriteLine(outputFounds);                            
+                            Console.WriteLine(stuffProfiles[i]);                            
                         }
                     }
 
-                    outputFoundCount = 0;
                     outputFounds=string.Empty;
                 }
             }
@@ -110,23 +109,23 @@ namespace Lerning
         {
             char splitChar = ' ';
 
-            int surNameArrayPos = 1;
+            int surNamePos = 1;
 
             string[] userProfile = new string[3];
 
-            userProfile = stuffProfiles.Split(new char[] { splitChar });
+            userProfile = stuffProfiles.Split(splitChar);
 
-            return userProfile[surNameArrayPos];
+            return userProfile[surNamePos];
         }
 
-        private static void DeleteSomeProfile(ref string[] stuffProfiles, ref string[] stuffPost)
+        private static void DeleteOneDossier(ref string[] stuffProfiles, ref string[] stuffPost)
         {
             int userInputDelete = 0;
 
             Console.Clear();
             Console.WriteLine("Вы в меню удаления досье.\nПожалуйста укажеите номер пользователя для удаления.");
 
-            ShowAllProfilesAndPost(stuffProfiles, stuffPost, true);
+            ShowAllDossies(stuffProfiles, stuffPost, true);
 
             if (int.TryParse(Console.ReadLine(), out userInputDelete))
             {
@@ -134,13 +133,14 @@ namespace Lerning
                 {
                     userInputDelete--;
 
-                    DeleteUser(userInputDelete, ref stuffProfiles, ref stuffPost);
+                    DeleteOneElement(ref stuffProfiles, userInputDelete);
+                    DeleteOneElement(ref stuffPost, userInputDelete);
 
                     Console.Beep();
                 }
             }
 
-            ShowAllProfilesAndPost(stuffProfiles, stuffPost, true);
+            ShowAllDossies(stuffProfiles, stuffPost, true);
 
             WaitForKey();
         }
@@ -152,29 +152,24 @@ namespace Lerning
             Console.ReadKey();
         }
 
-        private static void DeleteUser(int number, ref string[] stuffProfiles, ref string[] stuffPost)
+        private static void DeleteOneElement(ref string[] currentArray,int deletedElement)
         {
-            int newLengthArray = stuffProfiles.Length - 1;
+            string[] saveArray = new string[currentArray.Length - 1];
             int numeric = 0;
 
-            string[] saveStuffProfiles = new string[newLengthArray];
-            string[] saveStuffPost = new string[newLengthArray];
-
-            for (int i = 0; i < stuffProfiles.Length; i++)
+            for (int i = 0; i < currentArray.Length; i++)
             {
-                if (i != number)
+                if (i != deletedElement)
                 {
-                    saveStuffProfiles[numeric] = stuffProfiles[i];
-                    saveStuffPost[numeric] = stuffPost[i];
+                    saveArray[numeric] = currentArray[i];
                     numeric++;
                 }
             }
 
-            stuffProfiles = saveStuffProfiles;
-            stuffPost = saveStuffPost;
+            currentArray = saveArray;
         }
 
-        private static void ShowAllProfilesAndPost(string[] stuffProfiles, string[] stuffPost, bool goThrough = false)
+        private static void ShowAllDossies(string[] stuffProfiles, string[] stuffPost, bool goThrough = false)
         {
             string fullNameAndPost = string.Empty;
 
@@ -183,7 +178,7 @@ namespace Lerning
             for (int i = 0; i < stuffProfiles.Length; i++)
             {
                 fullNameAndPost = $"{i + 1})";
-                fullNameAndPost += GenerateFullNameAndPost(stuffProfiles[i], stuffPost[i]);
+                fullNameAndPost += GenerateFullDossier(stuffProfiles[i], stuffPost[i]);
 
                 Console.WriteLine($"{fullNameAndPost}");
             }
@@ -194,9 +189,10 @@ namespace Lerning
             }
         }
 
-        private static string GenerateFullNameAndPost(string nameWithSpaces, string postWithSpaces)
+        private static string GenerateFullDossier(string nameWithSpaces, string postWithSpaces)
         {
             string fullNamePost = string.Empty;
+
             char whiteSpaceChar = ' ';
             char replaceChar = '-';
 
@@ -206,7 +202,7 @@ namespace Lerning
             return fullNamePost;
         }
 
-        private static void InputNewProfileAndPost(ref string[] stuffProfiles, ref string[] stuffPost)
+        private static void InputNewDossier(ref string[] stuffProfiles, ref string[] stuffPost)
         {
             string newName = string.Empty;
             string newSurName = string.Empty;
@@ -225,37 +221,33 @@ namespace Lerning
 
             Console.Write("Отчество:");
 
-            newFatherName = Console.ReadLine();
+            newFatherName = Console.ReadLine();        
 
             Console.Write("Должность:");
 
             newPost = Console.ReadLine();
 
-            CreateProfileAndPost(newName, newSurName, newFatherName, newPost, ref stuffProfiles, ref stuffPost);
+            CreateNewElementOfArray(newPost, ref stuffPost);
+            CreateNewElementOfArray($"{newName} {newSurName} {newFatherName}", ref stuffProfiles);
 
             Console.WriteLine("Пользователь успешно добавлен.");
 
             WaitForKey();
         }
 
-        private static void CreateProfileAndPost(string name, string secondName, string fatherName, string post, ref string[] stuffProfiles, ref string[] stuffPost)
+        private static void CreateNewElementOfArray(string newElement,ref string[] currentArray)
         {
-            int newLengthArray = stuffProfiles.Length + 1;
+            int newLengthArray = currentArray.Length + 1;
 
-            string[] tempStuffProfiles = new string[newLengthArray];
-            string[] tempStuffPost = new string[newLengthArray];
+            string[] tempArray = new string[newLengthArray];
 
-            for (int i = 0; i < stuffProfiles.Length; i++)
+            for (int i = 0; i < currentArray.Length; i++)
             {
-                tempStuffProfiles[i] = stuffProfiles[i];
-                tempStuffPost[i] = stuffPost[i];
+                tempArray[i] = currentArray[i];
             }
 
-            tempStuffProfiles[newLengthArray - 1] = $"{name} {secondName} {fatherName}";
-            tempStuffPost[newLengthArray - 1] = $"{post}";
-
-            stuffProfiles = tempStuffProfiles;
-            stuffPost = tempStuffPost;
+            tempArray[tempArray.Length-1] = newElement;
+            currentArray = tempArray;
         }
     }
 }
