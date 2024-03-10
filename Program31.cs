@@ -172,35 +172,25 @@ namespace Lerning
 
         private static void ShowAllDossies(string[] stuffProfiles, string[] stuffPost, bool goThrough = false)
         {
-            string fullNameAndPost = string.Empty;
+            string fullDocier = string.Empty;
+
+            char whiteSpaceChar = ' ';
+            char replaceChar = '-';
 
             Console.WriteLine();
 
             for (int i = 0; i < stuffProfiles.Length; i++)
             {
-                fullNameAndPost = $"{i + 1})";
-                fullNameAndPost += GenerateFullDossier(stuffProfiles[i], stuffPost[i]);
+                fullDocier = stuffProfiles[i] + whiteSpaceChar + stuffPost[i];
+                fullDocier = $"{i + 1})"+ fullDocier.Replace(whiteSpaceChar, replaceChar);
 
-                Console.WriteLine($"{fullNameAndPost}");
+                Console.WriteLine($"{fullDocier}");
             }
 
             if (goThrough == false)
             {
                 WaitForKey();
             }
-        }
-
-        private static string GenerateFullDossier(string nameWithSpaces, string postWithSpaces)
-        {
-            string fullNamePost = string.Empty;
-
-            char whiteSpaceChar = ' ';
-            char replaceChar = '-';
-
-            fullNamePost = nameWithSpaces + whiteSpaceChar + postWithSpaces;
-            fullNamePost = fullNamePost.Replace(whiteSpaceChar, replaceChar);
-
-            return fullNamePost;
         }
 
         private static void InputNewDossier(ref string[] stuffProfiles, ref string[] stuffPost)
