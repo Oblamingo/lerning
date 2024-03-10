@@ -1,7 +1,4 @@
 using System;
-using System.Xml.Linq;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Lerning
 {
@@ -21,15 +18,18 @@ namespace Lerning
 
             string[] stuffProfiles = new string[0];
             string[] stuffPost = new string[0];
-            
-            CreateNewElementOfArray($"Имен Фамилий Отцович", ref stuffProfiles);
-            CreateNewElementOfArray("Уборщик", ref stuffPost);
-            CreateNewElementOfArray("Иван Иванов Иванович", ref stuffProfiles);
-            CreateNewElementOfArray("Креативный Дизайнер", ref stuffPost);
-            CreateNewElementOfArray("Сергей Суровов Ульянович", ref stuffProfiles);
-            CreateNewElementOfArray("Охранник", ref stuffPost);
-            CreateNewElementOfArray("Сергей Иванов Сергеевич", ref stuffProfiles);
-            CreateNewElementOfArray("Админ", ref stuffPost);
+
+            stuffProfiles = CreateNewElementOfArray($"Имен Фамилий Отцович", stuffProfiles);
+            stuffPost = CreateNewElementOfArray("Уборщик", stuffPost);
+
+            stuffProfiles = CreateNewElementOfArray("Иван Иванов Иванович", stuffProfiles);
+            stuffPost = CreateNewElementOfArray("Креативный Дизайнер", stuffPost);
+
+            stuffProfiles = CreateNewElementOfArray("Сергей Суровов Ульянович", stuffProfiles);
+            stuffPost = CreateNewElementOfArray("Охранник", stuffPost);
+
+            stuffProfiles = CreateNewElementOfArray("Сергей Иванов Сергеевич", stuffProfiles);
+            stuffPost = CreateNewElementOfArray("Админ", stuffPost);
 
             while (isWork)
             {
@@ -73,7 +73,7 @@ namespace Lerning
             string codeExit = "quit";
             string userInput = string.Empty;
             string surName = string.Empty;
-            string outputFounds= string.Empty;
+            string outputFounds = string.Empty;
 
             int limitLength = 2;
             int notFound = -1;
@@ -88,19 +88,19 @@ namespace Lerning
 
                 userInput = Console.ReadLine().ToLower();
 
-                if (userInput != codeExit && userInput.Length>=limitLength)
+                if (userInput != codeExit && userInput.Length >= limitLength)
                 {
                     for (int i = 0; i < stuffProfiles.Length; i++)
                     {
                         surName = GetSecondName(stuffProfiles[i]).ToLower();
 
-                        if(surName.IndexOf(userInput) != notFound)
+                        if (surName.IndexOf(userInput) != notFound)
                         {
-                            Console.WriteLine(stuffProfiles[i]);                            
+                            Console.WriteLine(stuffProfiles[i]);
                         }
                     }
 
-                    outputFounds=string.Empty;
+                    outputFounds = string.Empty;
                 }
             }
         }
@@ -133,8 +133,8 @@ namespace Lerning
                 {
                     userInputDelete--;
 
-                    DeleteOneElement(ref stuffProfiles, userInputDelete);
-                    DeleteOneElement(ref stuffPost, userInputDelete);
+                    stuffProfiles = DeleteOneElement(stuffProfiles, userInputDelete);
+                    stuffPost = DeleteOneElement(stuffPost, userInputDelete);
 
                     Console.Beep();
                 }
@@ -152,10 +152,11 @@ namespace Lerning
             Console.ReadKey();
         }
 
-        private static void DeleteOneElement(ref string[] currentArray,int deletedElement)
+        private static string[] DeleteOneElement(string[] currentArray, int deletedElement)
         {
-            string[] saveArray = new string[currentArray.Length - 1];
             int numeric = 0;
+
+            string[] saveArray = new string[currentArray.Length - 1];
 
             for (int i = 0; i < currentArray.Length; i++)
             {
@@ -166,7 +167,7 @@ namespace Lerning
                 }
             }
 
-            currentArray = saveArray;
+            return saveArray;
         }
 
         private static void ShowAllDossies(string[] stuffProfiles, string[] stuffPost, bool goThrough = false)
@@ -221,33 +222,32 @@ namespace Lerning
 
             Console.Write("Отчество:");
 
-            newFatherName = Console.ReadLine();        
+            newFatherName = Console.ReadLine();
 
             Console.Write("Должность:");
 
             newPost = Console.ReadLine();
 
-            CreateNewElementOfArray(newPost, ref stuffPost);
-            CreateNewElementOfArray($"{newName} {newSurName} {newFatherName}", ref stuffProfiles);
+            stuffPost = CreateNewElementOfArray(newPost, stuffPost);
+            stuffProfiles = CreateNewElementOfArray($"{newName} {newSurName} {newFatherName}", stuffProfiles);
 
             Console.WriteLine("Пользователь успешно добавлен.");
 
             WaitForKey();
         }
 
-        private static void CreateNewElementOfArray(string newElement,ref string[] currentArray)
+        private static string[] CreateNewElementOfArray(string newElement, string[] currentArray)
         {
-            int newLengthArray = currentArray.Length + 1;
-
-            string[] tempArray = new string[newLengthArray];
+            string[] tempArray = new string[currentArray.Length + 1];
 
             for (int i = 0; i < currentArray.Length; i++)
             {
                 tempArray[i] = currentArray[i];
             }
 
-            tempArray[tempArray.Length-1] = newElement;
-            currentArray = tempArray;
+            tempArray[tempArray.Length - 1] = newElement;
+
+            return tempArray;
         }
     }
 }
