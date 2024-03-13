@@ -24,8 +24,8 @@ namespace Lerning
             char emptyChar = ' ';
             char wallChar = '#';
 
-            int userX = 1;
-            int userY = 1;
+            int userPositionX = 1;
+            int userPositionY = 1;
 
             bool isWork = true;
 
@@ -39,20 +39,20 @@ namespace Lerning
 
                 DrawMap(map);
 
-                Console.SetCursorPosition(userX, userY);
+                Console.SetCursorPosition(userPositionX, userPositionY);
                 Console.Write(userChar);
                 
-                GetNewPositionPlayer(wallChar,ref userX,ref userY, map);
+                GetNewPositionPlayer(wallChar,ref userPositionX,ref userPositionY, map);
 
-                isWork = CheckExitPosition(userX, userY, map, exitChar);                
+                isWork = CheckExitPosition(userPositionX, userPositionY, map, exitChar);                
             }
         }
 
-        private static bool CheckExitPosition(int userX, int userY, char[,] map, char exit)
+        private static bool CheckExitPosition(int userPositionX, int userPositionY, char[,] map, char exit)
         {
             bool isWork = true;
 
-            if (map[userY, userX] == exit)
+            if (map[userPositionY, userPositionX] == exit)
             {
                 isWork = false;
 
@@ -64,7 +64,7 @@ namespace Lerning
             return isWork;
         }
 
-        private static void GenerateRandomExitPosition(ref char[,]map,char emptySpace, char exitChar)
+        private static void GenerateRandomExitPosition(ref char[,]map, char emptySpace, char exitChar)
         {
             Random random = new Random();
 
@@ -117,29 +117,34 @@ namespace Lerning
             }
         }
 
-        private static void GetNewPositionPlayer(char wallChar,ref int userX,ref int userY, char[,] map)
+        private static void GetNewPositionPlayer(char wallChar,ref int userPositionX,ref int userPositionY, char[,] map)
         {
             int newUserPositionX;
             int newUserPositionY;
 
             int[] direction = GetDirection();
 
-            newUserPositionX = userX + direction[0];
-            newUserPositionY = userY + direction[1];
+            newUserPositionX = userPositionX + direction[0];
+            newUserPositionY = userPositionY + direction[1];
 
             if (map[newUserPositionY,newUserPositionX] != wallChar)
             {
-                userX = newUserPositionX;
-                userY = newUserPositionY;
+                userPositionX = newUserPositionX;
+                userPositionY = newUserPositionY;
             }
         }
 
         private static int[] GetDirection()
         {
+            const ConsoleKey MoveUpKey = ConsoleKey.UpArrow;
+            const ConsoleKey MoveDownArrow = ConsoleKey.DownArrow;
+            const ConsoleKey MoveLeftArrow = ConsoleKey.LeftArrow;
+            const ConsoleKey MoveRightArrow = ConsoleKey.RightArrow;
+
             int[] resultDirection = {0,0};
 
-            int X = 0;
-            int Y = 1;
+            int directionX = 0;
+            int directionY = 1;
             int positiveMove = 1;
             int negativeMove = -1;
 
@@ -147,20 +152,20 @@ namespace Lerning
 
             switch (consoleKey.Key)
             {
-                case ConsoleKey.UpArrow:
-                    resultDirection[Y] = negativeMove;
+                case MoveUpKey:
+                    resultDirection[directionY] = negativeMove;
                     break;
 
-                case ConsoleKey.DownArrow:
-                    resultDirection[Y] = positiveMove;
+                case MoveDownArrow:
+                    resultDirection[directionY] = positiveMove;
                     break;
 
-                case ConsoleKey.LeftArrow:
-                    resultDirection[X] = negativeMove;
+                case MoveLeftArrow:
+                    resultDirection[directionX] = negativeMove;
                     break;
 
-                case ConsoleKey.RightArrow:
-                    resultDirection[X] = positiveMove;
+                case MoveRightArrow:
+                    resultDirection[directionX] = positiveMove;
                     break;
             }
 
