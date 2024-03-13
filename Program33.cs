@@ -20,13 +20,11 @@ namespace Lerning
             wikiBook.Add("собака", "Домашнее животное животное на 4х лапах, которое гавкает");
             wikiBook.Add("человек", "Домашнее животное животное на 2х ногах, которое жрёт");
 
-
             while (isWork)
             {
                 Console.WriteLine($"Введите слово для поиска в словаре ('{stopWord.ToUpper()}'/'{stopWord}' - для выхода ):");
 
                 userInput = Console.ReadLine().ToLower();
-
 
                 if (userInput == stopWord)
                 {
