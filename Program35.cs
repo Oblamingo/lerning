@@ -47,8 +47,6 @@ namespace Lerning
 
         private static void DrawList(List<int> numbers)
         {
-            ConsoleColor consoleColorDefault = Console.ForegroundColor;
-
             string messageTemp = string.Empty;
 
             if (numbers.Count > 0)
@@ -66,8 +64,6 @@ namespace Lerning
 
         private static void DrawSumOfList(List<int> numbers)
         {
-            ConsoleColor newConsoleColor = ConsoleColor.Green;
-
             int sumResult = 0;
 
             foreach (int number in numbers)
