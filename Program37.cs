@@ -19,11 +19,9 @@ namespace Lerning
 
         private static void AddValueToList(List<int> numbers, int[] array)
         {
-            bool notIncluded = false;
-
             for (int i = 0; i < array.Length; i++)
             {
-                if (numbers.Contains(array[i]) == notIncluded)
+                if (numbers.Contains(array[i]) == false)
                 {
                     numbers.Add(array[i]);
                 }
