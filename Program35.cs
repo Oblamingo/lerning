@@ -18,7 +18,7 @@ namespace Lerning
 
             while (isEnter)
             {
-                DrawArray(numbers);
+                DrawList(numbers);
 
                 Console.WriteLine($"{MenuSum} - Для суммирования чисел\n" +
                                   $"{MenuExit} - Для выхода\n" +
@@ -29,7 +29,7 @@ namespace Lerning
                 switch (inputLine)
                 {
                     case MenuSum:
-                        DrawSumOfArrray(numbers);
+                        DrawSumOfList(numbers);
                         break;
 
                     case MenuExit:
@@ -37,7 +37,7 @@ namespace Lerning
                         break;
 
                     default:
-                        AddNewElementOfArray(inputLine, numbers);
+                        AddNewElementOfList(inputLine, numbers);
                         break;
                 }
 
@@ -45,7 +45,7 @@ namespace Lerning
             }
         }
 
-        private static void DrawArray(List<int> numbers)
+        private static void DrawList(List<int> numbers)
         {
             ConsoleColor consoleColorDefault = Console.ForegroundColor;
 
@@ -64,7 +64,7 @@ namespace Lerning
             }
         }
 
-        private static void DrawSumOfArrray(List<int> numbers)
+        private static void DrawSumOfList(List<int> numbers)
         {
             ConsoleColor newConsoleColor = ConsoleColor.Green;
 
@@ -78,13 +78,11 @@ namespace Lerning
             Console.Write($"Сумма = ");
 
             ShowMesseage($"{sumResult}");
-            ShowPressAnyKeyAndWait();
+            ShowAwait();
         }
 
-        private static void AddNewElementOfArray(string inputLine, List<int> numbers)
+        private static void AddNewElementOfList(string inputLine, List<int> numbers)
         {
-            ConsoleColor redConsoleColor = ConsoleColor.Red;
-
             int inputInt = 0;
 
             if (int.TryParse(inputLine, out inputInt))
@@ -94,7 +92,7 @@ namespace Lerning
             else
             {
                 ShowMesseage("Не верная команада", true);
-                ShowPressAnyKeyAndWait();
+                ShowAwait();
             }
         }
 
@@ -116,7 +114,7 @@ namespace Lerning
 
         }
 
-        private static void ShowPressAnyKeyAndWait()
+        private static void ShowAwait()
         {
             Console.WriteLine("Нажмите любую клавишу. . .");
             Console.ReadKey();
