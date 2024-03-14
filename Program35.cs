@@ -107,7 +107,6 @@ namespace Lerning
             Console.WriteLine($"{text}");
 
             Console.ForegroundColor = consoleColorDefault;
-
         }
 
         private static void ShowAwait()
