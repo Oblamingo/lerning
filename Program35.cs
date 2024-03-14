@@ -20,7 +20,7 @@ namespace Lerning
             {
                 DrawArray(numbers);
 
-                Console.WriteLine($"{MenuSum} - Для суммирования чисел\n" + 
+                Console.WriteLine($"{MenuSum} - Для суммирования чисел\n" +
                                   $"{MenuExit} - Для выхода\n" +
                                   $"Введите команду или число:");
 
@@ -37,7 +37,7 @@ namespace Lerning
                         break;
 
                     default:
-                        numbers = AddNewElementOfArray(inputLine,numbers);
+                        AddNewElementOfArray(inputLine, numbers);
                         break;
                 }
 
@@ -60,17 +60,13 @@ namespace Lerning
 
                 Console.WriteLine($"Введённый массив:");
 
-                Console.ForegroundColor = ConsoleColor.Green;
-
-                Console.WriteLine($"{messageTemp}");
-
-                Console.ForegroundColor = consoleColorDefault;
+                ShowMesseage($"{messageTemp}");
             }
         }
 
         private static void DrawSumOfArrray(List<int> numbers)
         {
-            ConsoleColor consoleColorDefault = Console.ForegroundColor;
+            ConsoleColor newConsoleColor = ConsoleColor.Green;
 
             int sumResult = 0;
 
@@ -81,19 +77,13 @@ namespace Lerning
 
             Console.Write($"Сумма = ");
 
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine($"{sumResult}");
-
-            Console.ForegroundColor = consoleColorDefault;
-
-            Console.WriteLine("Нажмите любую клавишу. . .");
-            Console.ReadKey();
+            ShowMesseage($"{sumResult}");
+            ShowPressAnyKeyAndWait();
         }
 
-        private static List<int> AddNewElementOfArray(string inputLine, List<int> numbers)
+        private static void AddNewElementOfArray(string inputLine, List<int> numbers)
         {
-            ConsoleColor consoleColorDefault = Console.ForegroundColor;
+            ConsoleColor redConsoleColor = ConsoleColor.Red;
 
             int inputInt = 0;
 
@@ -103,17 +93,33 @@ namespace Lerning
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                ShowMesseage("Не верная команада", true);
+                ShowPressAnyKeyAndWait();
+            }
+        }
 
-                Console.WriteLine("Не верная команада");
+        private static void ShowMesseage(string text, bool isError = false)
+        {
+            ConsoleColor newConsoleColor = ConsoleColor.Green;
+            ConsoleColor consoleColorDefault = Console.ForegroundColor;
 
-                Console.ForegroundColor = consoleColorDefault;
-
-                Console.WriteLine("Нажмите любую клавишу. . .");
-                Console.ReadKey();
+            if (isError)
+            {
+                newConsoleColor = ConsoleColor.Red;
             }
 
-            return numbers;
+            Console.ForegroundColor = newConsoleColor;
+
+            Console.WriteLine($"{text}");
+
+            Console.ForegroundColor = consoleColorDefault;
+
+        }
+
+        private static void ShowPressAnyKeyAndWait()
+        {
+            Console.WriteLine("Нажмите любую клавишу. . .");
+            Console.ReadKey();
         }
     }
 }
