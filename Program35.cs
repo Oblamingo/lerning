@@ -20,9 +20,9 @@ namespace Lerning
             {
                 DrawArray(numbers);
 
-                Console.WriteLine($"{MenuSum} - Для суммирования чисел в массиве\n" + 
+                Console.WriteLine($"{MenuSum} - Для суммирования чисел\n" + 
                                   $"{MenuExit} - Для выхода\n" +
-                                  $"Введите команду или число для добавления в массив:");
+                                  $"Введите команду или число:");
 
                 inputLine = Console.ReadLine().ToLower();
 
@@ -53,9 +53,9 @@ namespace Lerning
 
             if (numbers.Count > 0)
             {
-                foreach (int i in numbers)
+                foreach (int number in numbers)
                 {
-                    messageTemp += $"{i} ";
+                    messageTemp += $"{number} ";
                 }
 
                 Console.WriteLine($"Введённый массив:");
@@ -74,8 +74,10 @@ namespace Lerning
 
             int sumResult = 0;
 
-            foreach (int i in numbers)
-                sumResult += i;
+            foreach (int number in numbers)
+            {
+                sumResult += number;
+            }
 
             Console.Write($"Сумма = ");
 
