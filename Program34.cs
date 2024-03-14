@@ -6,120 +6,69 @@ namespace Lerning
     internal class Program
     {
         static void Main(string[] args)
+        {            
+            Queue<int> numbers = new Queue<int>();
+
+            int countQueue = 5;
+            int minRandom = 10;
+            int maxRandom = 101;
+            int resultProfit = 0;
+
+            numbers = GenerateCostomers(countQueue, minRandom, maxRandom);  
+            resultProfit = GetProfit(numbers);
+
+            Console.WriteLine($"Прибыль за день: {resultProfit}");
+            Console.ReadKey();
+        }
+
+        private static Queue<int> GenerateCostomers(int queueSize,int minRandom, int maxRandom)
         {
-            const string MenuSum = "sum";
-            const string MenuExit = "exit";
+            Random random = new Random();
+            Queue<int> numbers = new Queue<int>();
 
-            List<int> numbers = new List<int>();
+            int newCoast = 0;
 
-            bool isEnter = true;
-
-            string inputLine = string.Empty;
-
-            while (isEnter)
+            for (int i = 0; i < queueSize; i++)
             {
-                DrawArray(numbers);
+                newCoast = random.Next(minRandom, maxRandom);
+                numbers.Enqueue(newCoast);              
+            }
 
-                Console.WriteLine($"{MenuSum} - Для суммирования чисел\n" +
-                                  $"{MenuExit} - Для выхода\n" +
-                                  $"Введите команду или число:");
+            return numbers;
+        }
 
-                inputLine = Console.ReadLine().ToLower();
+        private static int GetProfit(Queue<int> numbers)
+        {
+            int newCostomer = 0;
+            int profit = 0;
 
-                switch (inputLine)
-                {
-                    case MenuSum:
-                        DrawSumOfArrray(numbers);
-                        break;
+            while (numbers.Count > 0)
+            {
+                newCostomer = numbers.Dequeue();
 
-                    case MenuExit:
-                        isEnter = false;
-                        break;
+                ShowQueue(numbers);
 
-                    default:
-                        AddNewElementOfArray(inputLine, numbers);
-                        break;
-                }
+                Console.WriteLine($"Прибыль: {profit}");
+                Console.WriteLine($"Стоимость покупки: {newCostomer}");
 
+                profit += newCostomer;
+
+                Console.WriteLine($"Итог: {profit}\nНажмите любую клавишу,чтобы обсужить следующего клиента. . . ");
+                Console.ReadKey();
                 Console.Clear();
             }
+
+            return profit;
         }
 
-        private static void DrawArray(List<int> numbers)
+        private static void ShowQueue(Queue<int> queue)
         {
-            ConsoleColor consoleColorDefault = Console.ForegroundColor;
+            Console.WriteLine($"Очередь:");
 
-            string messageTemp = string.Empty;
-
-            if (numbers.Count > 0)
+            foreach (var item in queue)
             {
-                foreach (int number in numbers)
-                {
-                    messageTemp += $"{number} ";
-                }
-
-                Console.WriteLine($"Введённый массив:");
-
-                ShowMesseage($"{messageTemp}");
+                Console.WriteLine(item);
             }
-        }
-
-        private static void DrawSumOfArrray(List<int> numbers)
-        {
-            ConsoleColor newConsoleColor = ConsoleColor.Green;
-
-            int sumResult = 0;
-
-            foreach (int number in numbers)
-            {
-                sumResult += number;
-            }
-
-            Console.Write($"Сумма = ");
-
-            ShowMesseage($"{sumResult}");
-            ShowPressAnyKeyAndWait();
-        }
-
-        private static void AddNewElementOfArray(string inputLine, List<int> numbers)
-        {
-            ConsoleColor redConsoleColor = ConsoleColor.Red;
-
-            int inputInt = 0;
-
-            if (int.TryParse(inputLine, out inputInt))
-            {
-                numbers.Add(inputInt);
-            }
-            else
-            {
-                ShowMesseage("Не верная команада", true);
-                ShowPressAnyKeyAndWait();
-            }
-        }
-
-        private static void ShowMesseage(string text, bool isError = false)
-        {
-            ConsoleColor newConsoleColor = ConsoleColor.Green;
-            ConsoleColor consoleColorDefault = Console.ForegroundColor;
-
-            if (isError)
-            {
-                newConsoleColor = ConsoleColor.Red;
-            }
-
-            Console.ForegroundColor = newConsoleColor;
-
-            Console.WriteLine($"{text}");
-
-            Console.ForegroundColor = consoleColorDefault;
-
-        }
-
-        private static void ShowPressAnyKeyAndWait()
-        {
-            Console.WriteLine("Нажмите любую клавишу. . .");
-            Console.ReadKey();
         }
     }
 }
