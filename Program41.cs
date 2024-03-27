@@ -16,7 +16,7 @@ namespace Lerning
     class Croupier
     {
         private Player _player = new Player();
-        private CardDeck _cardDeck = new CardDeck();
+        private Deck _cardDeck = new Deck();
 
         public void Play()
         {
@@ -30,11 +30,11 @@ namespace Lerning
 
                 Console.WriteLine("Карты в колоде:");
 
-                ShowCards(_cardDeck._cards);
+                _cardDeck.ShowCards();
 
                 Console.WriteLine("\n\nКарты у игрока:");
 
-                ShowCards(_player._takenCards);
+                _player.ShowCards();
 
                 Console.WriteLine("\nСколько вытянуть карт?");
 
@@ -64,75 +64,48 @@ namespace Lerning
                     }
                 }
             }
-        }
-
-        private void ShowCards(List<Card> _cards)
-        {
-            int lineLength = 0;
-            int lineSize = 3;
-
-            foreach (var cardItem in _cards)
-            {
-                Console.Write($"[{cardItem.Suit} {cardItem.Rank}]\t\t");
-
-                if (lineLength == lineSize)
-                {
-                    lineLength = 0;
-                    Console.WriteLine();
-                }
-                else
-                {
-                    lineLength++;
-                }
-            }
-        }
-
-        private void ShowCards(Stack<Card> _cards)
-        {
-            int lineLength = 0;
-            int lineSize = 3;
-
-            foreach (var cardItem in _cards)
-            {
-                Console.Write($"[{cardItem.Suit} {cardItem.Rank}]\t\t");
-
-                if (lineLength == lineSize)
-                {
-                    lineLength = 0;
-                    Console.WriteLine();
-                }
-                else
-                {
-                    lineLength++;
-                }
-            }
-        }
+        }            
     }
 
     class Player
     {
-        public Player()
-        {
-            _takenCards = new List<Card>();
-        }
-        public List<Card> _takenCards { get; private set; }
+        private List<Card> _takenCards = new List<Card>();
 
         public void TakeCard(Card card)
         {
             _takenCards.Add(card);
         }
+
+        public void ShowCards()
+        {
+            int lineLength = 0;
+            int lineSize = 3;
+
+            foreach (var cardItem in _takenCards)
+            {
+                Console.Write($"[{cardItem.Suit} {cardItem.Rank}]\t\t");
+
+                if (lineLength == lineSize)
+                {
+                    lineLength = 0;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    lineLength++;
+                }
+            }
+        }
     }
 
-    class CardDeck
+    class Deck
     {
-        public CardDeck()
-        {
-            _cards = new Stack<Card>();
+        private Stack<Card> _cards = new Stack<Card>();
 
+        public Deck()
+        {
             Create();
         }
-
-        public Stack<Card> _cards { get; private set; }
 
         public bool IsEmpty()
         {
@@ -149,6 +122,27 @@ namespace Lerning
             return _cards.Pop();
         }
 
+        public void ShowCards()
+        {
+            int lineLength = 0;
+            int lineSize = 3;
+
+            foreach (var cardItem in _cards)
+            {
+                Console.Write($"[{cardItem.Suit} {cardItem.Rank}]\t\t");
+
+                if (lineLength == lineSize)
+                {
+                    lineLength = 0;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    lineLength++;
+                }
+            }
+        }
+
         private void Create()
         {
             List<Card> allCards = new List<Card>();
@@ -162,7 +156,7 @@ namespace Lerning
 
         private void GenerateCards(List<Card> allCards)
         {
-            string[] suits = { "Черви", "Бубны", "Крести", "Пики" };
+            string[] suits = { "♠", "♣", "♦", "♥" };
             string[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Валет", "Королева", "Король", "Туз" };
 
             for (int i = 0; i < suits.Length; i++)
@@ -177,15 +171,17 @@ namespace Lerning
         private void Shuffle(List<Card> allCards)
         {
             Random random = new Random();
+            Card tempCard;
 
+            int tempPosition = 0;
             int count = allCards.Count;
 
             for (int i = 0; i < count; i++)
             {
-                Card tempCard = allCards[i];
-
-                allCards.RemoveAt(i);
-                allCards.Insert(random.Next(0, count), tempCard);
+                tempPosition = random.Next(0, count);
+                tempCard = allCards[tempPosition];
+                allCards[tempPosition] = allCards[i];
+                allCards[i] = tempCard;
             }
         }
 
@@ -200,13 +196,13 @@ namespace Lerning
 
     class Card
     {
-        public string Suit { get; private set; }
-        public string Rank { get; private set; }
-
         public Card(string suit, string rank)
         {
             Suit = suit;
             Rank = rank;
         }
+
+        public string Suit { get; private set; }
+        public string Rank { get; private set; }
     }
 }
