@@ -7,9 +7,9 @@ namespace Lerning
     {
         static void Main(string[] args)
         {
-            Database dataBase = new Database();
+            Database database = new Database();
 
-            dataBase.Work();
+            database.Work();
         }
     }
 
@@ -25,9 +25,9 @@ namespace Lerning
 
     enum PlayerMethods
     {
-        remove,
-        ban,
-        unban
+        Remove,
+        Ban,
+        Unban
     }
 
     public class Database
@@ -64,19 +64,19 @@ namespace Lerning
                         break;
 
                     case MenuComand.BanPlayer:
-                        ChooseMethod(PlayerMethods.ban);
+                        ChooseMethod(PlayerMethods.Ban);
                         break;
 
                     case MenuComand.UnbanPlayer:
-                        ChooseMethod(PlayerMethods.unban);
+                        ChooseMethod(PlayerMethods.Unban);
                         break;
 
                     case MenuComand.RemovePlayer:
-                        ChooseMethod(PlayerMethods.remove);
+                        ChooseMethod(PlayerMethods.Remove);
                         break;
 
                     case MenuComand.Exit:
-                        isWork = IsExit();
+                        isWork = IsWork();
                         break;
 
                     default:
@@ -89,26 +89,24 @@ namespace Lerning
             }
         }
 
-        public bool IsExit()
+        private bool IsWork()
         {
-            bool result = true;
-
-            string positiveAnswer = "Q";
+            string positiveAnswer = "q";
             string inputExitUser = string.Empty;
 
-            Console.WriteLine($"\nВыйти? Нажмите {positiveAnswer}/{positiveAnswer.ToLower()}");
+            Console.WriteLine($"\nВыйти? Нажмите {positiveAnswer.ToUpper()}/{positiveAnswer}");
 
             inputExitUser = Console.ReadLine().ToLower();
 
             if (inputExitUser == positiveAnswer)
             {
-                result = false;
+                return false;
             }
 
-            return result;
+            return true;
         }
 
-        public void ShowPlayers()
+        private void ShowPlayers()
         {
             Console.WriteLine("\nВывод игроков");
 
@@ -125,7 +123,7 @@ namespace Lerning
             }
         }
 
-        public void AddPlayer()
+        private void AddPlayer()
         {
             string playerName = string.Empty;
 
@@ -149,7 +147,7 @@ namespace Lerning
             }
         }
 
-        public void ChooseMethod(Enum method)
+        private void ChooseMethod(Enum method)
         {
             Player player = null;
 
@@ -157,16 +155,16 @@ namespace Lerning
             {
                 switch(method)
                 {
-                    case PlayerMethods.remove:
+                    case PlayerMethods.Remove:
                         _players.Remove(player);
                         break;
 
-                    case PlayerMethods.ban:
-                        player.SetBanStatus(true);
+                    case PlayerMethods.Ban:
+                        player.Ban();
                         break;       
                         
-                    case PlayerMethods.unban:
-                        player.SetBanStatus(false);
+                    case PlayerMethods.Unban:
+                        player.UnBan();
                         break;
                 }                
 
@@ -200,7 +198,7 @@ namespace Lerning
                         {
                             player = _players[i];
 
-                            result = true;
+                            return true;
                         }
                     }
                 }
@@ -235,7 +233,7 @@ namespace Lerning
 
         private int _level;
 
-        private bool _banned;
+        private bool _isBanned;
 
         public Player(string name, int level)
         {
@@ -246,14 +244,19 @@ namespace Lerning
 
         public int UniqueId { get; private set; }
 
-        public void SetBanStatus(bool isBan)
+        public void Ban()
         {
-            _banned = isBan;
+            _isBanned = true;
+        }
+
+        public void UnBan()
+        {
+            _isBanned = false;
         }
 
         public void ShowInfo()
         {
-            string isBanned = _banned ? "ДА" : "НЕТ";
+            string isBanned = _isBanned ? "ДА" : "НЕТ";
 
             Console.WriteLine($"ID {UniqueId} Имя {_name} уровень {_level} забанен {isBanned}");
         }
