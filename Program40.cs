@@ -23,17 +23,24 @@ namespace Lerning
         Exit = 6
     }
 
+    enum PlayerMethods
+    {
+        remove,
+        ban,
+        unban
+    }
+
     public class Database
     {
-        List<Player> _players = new List<Player>();
+        private List<Player> _players = new List<Player>();
 
         public void Work()
         {
-            bool _isWork = true;
+            bool isWork = true;
 
             MenuComand _menuComand;
 
-            while (_isWork)
+            while (isWork)
             {
                 Console.Clear();
                 Console.WriteLine($"{(int)MenuComand.AddPlayer}) добавить игрока\n" +
@@ -57,19 +64,19 @@ namespace Lerning
                         break;
 
                     case MenuComand.BanPlayer:
-                        PlayerBanner(true);
+                        ChooseMethod(PlayerMethods.ban);
                         break;
 
                     case MenuComand.UnbanPlayer:
-                        PlayerBanner(false);
+                        ChooseMethod(PlayerMethods.unban);
                         break;
 
                     case MenuComand.RemovePlayer:
-                        RemovePlayer();
+                        ChooseMethod(PlayerMethods.remove);
                         break;
 
                     case MenuComand.Exit:
-                        _isWork = IsExit();
+                        isWork = IsExit();
                         break;
 
                     default:
@@ -86,14 +93,14 @@ namespace Lerning
         {
             bool result = true;
 
-            string _positiveAnswer = "Q";
-            string _inputExitUser = string.Empty;
+            string positiveAnswer = "Q";
+            string inputExitUser = string.Empty;
 
-            Console.WriteLine($"\nВыйти? Нажмите {_positiveAnswer}/{_positiveAnswer.ToLower()}");
+            Console.WriteLine($"\nВыйти? Нажмите {positiveAnswer}/{positiveAnswer.ToLower()}");
 
-            _inputExitUser = Console.ReadLine().ToLower();
+            inputExitUser = Console.ReadLine().ToLower();
 
-            if (_inputExitUser == _positiveAnswer)
+            if (inputExitUser == positiveAnswer)
             {
                 result = false;
             }
@@ -120,21 +127,21 @@ namespace Lerning
 
         public void AddPlayer()
         {
-            string _playerName = string.Empty;
+            string playerName = string.Empty;
 
             int _playerLevel = 0;
 
             Console.WriteLine("Введите имя игрока:");
 
-            _playerName = Console.ReadLine();
+            playerName = Console.ReadLine();
 
             Console.WriteLine("Введите уровень игрока:");
 
             _playerLevel = GetUserInput();
 
-            if (_playerLevel > 0 && string.IsNullOrEmpty(_playerName) == false)
+            if (_playerLevel > 0 && string.IsNullOrEmpty(playerName) == false)
             {
-                _players.Add(new Player(_playerName, _playerLevel));
+                _players.Add(new Player(playerName, _playerLevel));
             }
             else
             {
@@ -142,57 +149,58 @@ namespace Lerning
             }
         }
 
-        public void PlayerBanner(bool isBan)
+        public void ChooseMethod(Enum method)
         {
-            Player player = FindPlayer();
-
-            if (player != null)
-            {
-                player.Banned = isBan;
-
-                Console.WriteLine("Успешно");
-            }
-            else
-            {
-                Console.WriteLine("Ошибка");
-            }
-        }
-
-        public void RemovePlayer()
-        {
-            Player player = FindPlayer();
-
-            if (player != null)
-            {
-                _players.Remove(player);
-
-                Console.WriteLine("Успешно");
-            }
-            else
-            {
-                Console.WriteLine("Ошибка");
-            }
-        }
-
-        private Player FindPlayer()
-        {
-            int _index = 0;
-
             Player player = null;
+
+            if (TryGetPlayer(out player))
+            {
+                switch(method)
+                {
+                    case PlayerMethods.remove:
+                        _players.Remove(player);
+                        break;
+
+                    case PlayerMethods.ban:
+                        player.SetBanStatus(true);
+                        break;       
+                        
+                    case PlayerMethods.unban:
+                        player.SetBanStatus(false);
+                        break;
+                }                
+
+                Console.WriteLine("Успешно");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка");
+            }
+        }
+
+        private bool TryGetPlayer(out Player player)
+        {
+            int index = 0;
+
+            bool result = false;
+            
+            player = null;
 
             if (_players.Count > 0)
             {
                 Console.WriteLine($"Введите ID игрока");
 
-                _index = GetUserInput();
+                index = GetUserInput();
 
-                if (_index > 0)
+                if (index > 0)
                 {
                     for (int i = 0; i < _players.Count; i++)
                     {
-                        if (_players[i].UniqueId == _index)
+                        if (_players[i].UniqueId == index)
                         {
                             player = _players[i];
+
+                            result = true;
                         }
                     }
                 }
@@ -206,42 +214,48 @@ namespace Lerning
                 Console.WriteLine("Данные не обнаружены");
             }
 
-            return player;
+            return result;
         }
 
         private int GetUserInput()
         {
-            int _result = 0;
+            int result = 0;
 
-            int.TryParse(Console.ReadLine(), out _result);
+            int.TryParse(Console.ReadLine(), out result);
 
-            return _result;
+            return result;
         }
     }
 
     public class Player
     {
-        private static int _id = 1;
+        private static int s_id = 1;
 
         private string _name;
 
         private int _level;
 
+        private bool _banned;
+
         public Player(string name, int level)
         {
             _name = name;
             _level = level;
-            UniqueId = _id++;
+            UniqueId = s_id++;
+        }
+
+        public int UniqueId { get; private set; }
+
+        public void SetBanStatus(bool isBan)
+        {
+            _banned = isBan;
         }
 
         public void ShowInfo()
         {
-            string isBanned = Banned ? "ДА" : "НЕТ";
+            string isBanned = _banned ? "ДА" : "НЕТ";
 
             Console.WriteLine($"ID {UniqueId} Имя {_name} уровень {_level} забанен {isBanned}");
         }
-
-        public bool Banned { get; set; }
-        public int UniqueId { get; private set; }
     }
 }
