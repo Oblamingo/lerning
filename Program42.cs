@@ -87,7 +87,6 @@ namespace Lerning
     class Library
     {
         private List<Book> _books = new List<Book>();
-        private List<Book> _findedBooks = new List<Book>();
 
         public Library()
         {
