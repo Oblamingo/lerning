@@ -46,9 +46,10 @@ namespace Lerning
 
                     Item item = _seller.GiveItem(userInput);
 
-                    if (_buyer.IsEnoughMoney(item))
+                    if (_buyer.IsEnoughMoney(item.Price))
                     {
                         _buyer.BuyItem(item);
+                        _seller.SellItem(item);
 
                         if (_seller.IsEmpty())
                         {
@@ -90,15 +91,15 @@ namespace Lerning
 
     class Person
     {
-        public List<Item> _items;
+        protected List<Item> Items;
 
-        public int _money = 0;
+        protected int Money = 0;
 
-        public string _name = string.Empty;
+        protected string Name = string.Empty;
 
         public void TakeItems(Item item)
         {
-            _items.Add(item);
+            Items.Add(item);
         }
 
         public void Show()
@@ -111,9 +112,9 @@ namespace Lerning
         {
             int counter = 0;
 
-            Console.WriteLine($"{_name} вещи:");
+            Console.WriteLine($"{Name} вещи:");
 
-            foreach (Item item in _items)
+            foreach (Item item in Items)
             {
                 counter++;
 
@@ -125,7 +126,7 @@ namespace Lerning
 
         private void ShowMoney()
         {
-            Console.WriteLine($"{_name} деньги:{_money}р");
+            Console.WriteLine($"{Name} деньги:{Money}р");
         }
     }
 
@@ -133,21 +134,19 @@ namespace Lerning
     {
         public Buyer()
         {
-            _items = new List<Item>();
-            _money = 15000;
-            _name = "Покупатель";
+            Items = new List<Item>();
+            Money = 15000;
+            Name = "Покупатель";
         }
 
-        public bool IsEnoughMoney(Item item)
+        public bool IsEnoughMoney(int price)
         {
-            int selled = _money - item.Price;
-
-            return selled > 0;
+            return Money >= price;
         }
 
         public void BuyItem(Item item)
         {
-            _money -= item.Price;
+            Money -= item.Price;
 
             TakeItems(item);
         }
@@ -158,22 +157,27 @@ namespace Lerning
     {
         public Seller()
         {
-            _items = new List<Item>();
-            _name = "Продавец";
+            Items = new List<Item>();
+            Name = "Продавец";
         }
 
         public bool IsEmpty()
         {
-            return _items.Count == 0;
+            return Items.Count == 0;
         }
 
         public Item GiveItem(int itemNumber)
         {
-            Item tempItem = _items[itemNumber];
-
-            _items.RemoveAt(itemNumber);
+            Item tempItem = Items[itemNumber];            
 
             return tempItem;
+        }        
+        
+        public void SellItem(Item item)
+        {
+            Money += item.Price;
+
+            Items.Remove(item);
         }
     }
 
