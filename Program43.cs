@@ -10,7 +10,7 @@ namespace Lerning
             Market market = new Market();
 
             market.GenerateItems();
-            market.ShowMarket();
+            market.Trade();
         }
     }
 
@@ -19,13 +19,7 @@ namespace Lerning
         private Buyer _buyer = new Buyer();
         private Seller _seller = new Seller();
 
-        private void ShowErrorMessage(string message)
-        {
-            Console.WriteLine(message);
-            Console.ReadKey();
-        }
-
-        public void ShowMarket()
+        public void Trade()
         {
             bool isActive = true;
 
@@ -86,6 +80,12 @@ namespace Lerning
             _seller.TakeItems(new Item("Мышка", "ARDOR GAMING Fury", 1699));
             _seller.TakeItems(new Item("Мышка", "LAMZU Atlantis", 5999));
             _seller.TakeItems(new Item("Мышка", "Logitech G PRO X SUPERLIGHT", 14299));
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            Console.WriteLine(message);
+            Console.ReadKey();
         }
     }
 
